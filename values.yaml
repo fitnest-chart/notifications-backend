@@ -1,0 +1,21 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/fitnest-backend/notifications-service
+  tag: "latest"
+  pullPolicy: IfNotPresent
+  imagePullSecrets:
+    - name: ghcr-secret
+service:
+  type: ClusterIP
+  port: 8080
+istio:
+  enabled: true
+  host: "notifications-service"
+env: {}
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
