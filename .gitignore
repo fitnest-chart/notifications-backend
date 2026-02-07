@@ -1,0 +1,30 @@
+# Build and Gradle
+.gradle/
+build/
+out/
+gradle/wrapper/gradle-wrapper.jar
+
+# IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment and Secrets
+.env
+.env.local
+application-local.yml
+application-dev.yml
+application-prod.yml
