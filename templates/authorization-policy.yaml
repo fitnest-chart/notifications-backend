@@ -24,14 +24,12 @@ spec:
     {{- end }}
   - to:
     - operation:
-        methods: ["GET"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
         paths:
+          - "/api/v1/notifications/**"
           - "/v3/api-docs/*"
           - "/v3/api-docs"
           - "/swagger-ui/*"
           - "/swagger-ui.html"
           - "/actuator/*"
-    - operation:
-        paths:
-          - "/api/v1/notifications/**"
 {{- end }}
