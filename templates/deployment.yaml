@@ -14,6 +14,7 @@ spec:
       labels:
         {{- include "notifications-service.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "notifications-service.fullname" . }}
       {{- with .Values.image.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

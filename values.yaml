@@ -13,6 +13,10 @@ istio:
   host: "notifications-service"
   mtls:
     mode: STRICT
+  authorization:
+    internalCallers:
+      - "cluster.local/ns/fitnest-dev/sa/user-service"
+      - "cluster.local/ns/fitnest-dev/sa/iam-service"
 env:
   SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql-notifications:5432/fitnest_notifications"
   SPRING_DATASOURCE_USERNAME: "fitnest_notifications"
