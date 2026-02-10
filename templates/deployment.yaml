@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         {{- include "notifications-service.selectorLabels" . | nindent 8 }}
+      annotations:
+        {{- if .Values.istio.enabled }}
+        sidecar.istio.io/inject: "true"
+        {{- end }}
     spec:
       serviceAccountName: {{ include "notifications-service.fullname" . }}
       {{- with .Values.image.imagePullSecrets }}
@@ -21,7 +25,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - name: http
@@ -34,5 +38,13 @@ spec:
           value: {{ $value | quote }}
         {{- end }}
         {{- end }}
+        {{- if .Values.livenessProbe }}
+        livenessProbe:
+          {{- toYaml .Values.livenessProbe | nindent 10 }}
+        {{- end }}
+        {{- if .Values.readinessProbe }}
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 10 }}
+        {{- end }}
         resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+          {{- toYaml .Values.resources | nindent 10 }}

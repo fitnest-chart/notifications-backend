@@ -39,6 +39,23 @@ env:
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
   USER_SERVICE_URL: "http://user-service:8080"
   MEDIA_SERVICE_URL: "http://media-service:8086"
+  identity-service: "cluster.local/ns/fitnest-dev/sa/identity-service"
+  order-service: "cluster.local/ns/fitnest-dev/sa/order-service"
+  api-gateway: "cluster.local/ns/fitnest-dev/sa/api-gateway"
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 15
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+  initialDelaySeconds: 20
+  periodSeconds: 10
+
 resources:
   requests:
     cpu: 100m
