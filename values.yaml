@@ -16,7 +16,9 @@ istio:
   authorization:
     internalCallers:
       - "cluster.local/ns/fitnest-dev/sa/user-service"
-      - "cluster.local/ns/fitnest-dev/sa/iam-service"
+      - "cluster.local/ns/fitnest-dev/sa/identity-service"
+      - "cluster.local/ns/fitnest-dev/sa/order-service"
+      - "cluster.local/ns/fitnest-dev/sa/api-gateway"
 env:
   SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql-notifications:5432/fitnest_notifications"
   SPRING_DATASOURCE_USERNAME: "fitnest_notifications"
@@ -34,9 +36,8 @@ env:
   KAFKA_BOOTSTRAP_SERVERS: "kafka-service.fitnest-dev.svc.cluster.local:9092"
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
-  IAM_SERVICE_URL: "http://iam-service:8080"
+  IDENTITY_SERVICE_URL: "http://identity-service:8080"
   USER_SERVICE_URL: "http://user-service:8080"
-  MEDIA_SERVICE_URL: "http://media-service:8086"
   MEDIA_SERVICE_URL: "http://media-service:8086"
 resources:
   requests:
