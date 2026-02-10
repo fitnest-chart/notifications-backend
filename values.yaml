@@ -19,7 +19,7 @@ istio:
       - "cluster.local/ns/fitnest-dev/sa/identity-service"
       - "cluster.local/ns/fitnest-dev/sa/order-service"
       - "cluster.local/ns/fitnest-dev/sa/api-gateway"
-env:
+  SPRING_PROFILES_ACTIVE: "dev"
   SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql-notifications:5432/fitnest_notifications"
   SPRING_DATASOURCE_USERNAME: "fitnest_notifications"
   SPRING_DATASOURCE_PASSWORD: "notifications_password_123"
@@ -30,10 +30,10 @@ env:
   SPRING_MAIL_PASSWORD: "ejxg xmcz xrrt uzxm"
   SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
   SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
-  SPRING_REDIS_HOST: "redis.fitnest-dev.svc.cluster.local"
+  SPRING_REDIS_HOST: "redis"
   SPRING_REDIS_PORT: "6379"
   SPRING_REDIS_PASSWORD: ""
-  KAFKA_BOOTSTRAP_SERVERS: "kafka-service.fitnest-dev.svc.cluster.local:9092"
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-service:9092"
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
@@ -42,19 +42,9 @@ env:
   identity-service: "cluster.local/ns/fitnest-dev/sa/identity-service"
   order-service: "cluster.local/ns/fitnest-dev/sa/order-service"
   api-gateway: "cluster.local/ns/fitnest-dev/sa/api-gateway"
+  JAVA_OPTS: "-XX:TieredStopAtLevel=1 -Xss256k -Xmx448m"
 
-livenessProbe:
-  httpGet:
-    path: /actuator/health
-    port: http
-  initialDelaySeconds: 30
-  periodSeconds: 15
-readinessProbe:
-  httpGet:
-    path: /actuator/health
-    port: http
-  initialDelaySeconds: 20
-  periodSeconds: 10
+
 
 resources:
   requests:
