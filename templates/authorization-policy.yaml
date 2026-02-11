@@ -24,11 +24,13 @@ spec:
         methods: ["GET", "POST", "PUT", "DELETE"]
         paths: ["/api/v1/internal/*", "/api/v1/internal/**"]
 
-  # Allow public endpoints (health, docs, and SMS)
+  # Allow public endpoints (health, docs, and notifications)
   - to:
     - operation:
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST", "PUT", "DELETE"]
         paths:
+          - "/api/v1/notifications/*"
+          - "/api/v1/notifications/**"
           - "/api/v1/sms/*"
           - "/api/v1/sms/**"
           - "/v3/api-docs/*"
