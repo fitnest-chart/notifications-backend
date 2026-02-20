@@ -48,6 +48,7 @@ env:
   USER_SERVICE_URL: "http://user-service:8080"
   STORAGE_SERVICE_URL: "http://storage-service:8080"
   JAVA_OPTS: "-XX:TieredStopAtLevel=1 -Xss256k -Xmx448m"
+  FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
 resources:
   limits:
     memory: 512Mi
