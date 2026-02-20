@@ -41,6 +41,10 @@ spec:
           value: {{ $value | quote }}
         {{- end }}
         {{- end }}
+        volumeMounts:
+        - name: firebase-sa-volume
+          mountPath: {{ .Values.firebase.mountPath }}
+          readOnly: true
         {{- if .Values.livenessProbe }}
         livenessProbe:
           {{- toYaml .Values.livenessProbe | nindent 10 }}
@@ -51,3 +55,7 @@ spec:
         {{- end }}
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
+      volumes:
+      - name: firebase-sa-volume
+        secret:
+          secretName: {{ .Values.firebase.secretName }}
