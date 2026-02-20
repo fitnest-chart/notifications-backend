@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/fitnest-backend/notifications-service
-  tag: "development-fb9103a"
+  tag: "development-6f210b6"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
@@ -56,7 +56,6 @@ resources:
   requests:
     cpu: 250m
     memory: 256Mi
-
 firebase:
   secretName: firebase-sa
   mountPath: /app/firebase
