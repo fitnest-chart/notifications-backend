@@ -1,0 +1,61 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/fitnest-backend/notifications-service
+  tag: "development-de347f3"
+  pullPolicy: IfNotPresent
+  imagePullSecrets:
+    - name: ghcr-secret
+service:
+  type: ClusterIP
+  port: 8080
+  grpcPort: 9090
+istio:
+  enabled: true
+  host: "notifications-service"
+  mtls:
+    mode: STRICT
+  authorization:
+    internalCallers:
+      - "cluster.local/ns/fitnest-dev/sa/user-service"
+      - "cluster.local/ns/fitnest-dev/sa/identity-service"
+      - "cluster.local/ns/fitnest-dev/sa/order-service"
+      - "cluster.local/ns/fitnest-dev/sa/api-gateway"
+hpa:
+  enabled: false
+  minReplicas: "1"
+  maxReplicas: "3"
+  cpuUtilization: "90"
+  memoryUtilization: "450Mi"
+env:
+  SPRING_PROFILES_ACTIVE: "dev"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql-notifications:5432/fitnest_notifications"
+  SPRING_DATASOURCE_USERNAME: "fitnest_notifications"
+  SPRING_DATASOURCE_PASSWORD: "notifications_password_123"
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+  SPRING_MAIL_HOST: "smtp.gmail.com"
+  SPRING_MAIL_PORT: "587"
+  SPRING_MAIL_USERNAME: "agilepulse11@gmail.com"
+  SPRING_MAIL_PASSWORD: "your-email-password"
+  SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+  SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+  SPRING_REDIS_HOST: "redis"
+  SPRING_REDIS_PORT: "6379"
+  SPRING_REDIS_PASSWORD: ""
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-service:9092"
+  JWT_SECRET: "your-jwt-secret-change-in-production"
+  JWT_ISSUER: "fitnest"
+  IDENTITY_SERVICE_URL: "http://identity-service:8080"
+  USER_SERVICE_URL: "http://user-service:8080"
+  STORAGE_SERVICE_URL: "http://storage-service:8080"
+  JAVA_OPTS: "-Xmx384m -Xms192m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Xss256k"
+  FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
+resources:
+  limits:
+    memory: 512Mi
+    cpu: 500m
+  requests:
+    cpu: 250m
+    memory: 256Mi
+firebase:
+  secretName: firebase-sa
+  mountPath: /app/firebase
