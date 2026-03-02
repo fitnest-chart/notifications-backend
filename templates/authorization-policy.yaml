@@ -1,24 +1,24 @@
-{ { - if .Values.istio.enabled } }
+{{- if .Values.istio.enabled}}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: { { include "notifications-service.fullname" . } }-allow-internal
+  name: {{ include "notifications-service.fullname" . }}-allow-internal
   labels:
-    {{- include "notifications-service.labels" . | nindent 4 }}
+    {{- include "notifications-service.labels" . | nindent 4}}
 spec:
   selector:
     matchLabels:
-      { { - include "notifications-service.selectorLabels" . | nindent 6 } }
+      {{- include "notifications-service.selectorLabels" . | nindent 6}}
   action: ALLOW
   rules:
     # Allow internal service-to-service calls
     - from:
         - source:
-            { { - if .Values.istio.authorization } }
-              { { - if .Values.istio.authorization.internalCallers } }
-              principals: { { .Values.istio.authorization.internalCallers | toJson } }
-              { { - end } }
-              { { - end } }
+            {{- if .Values.istio.authorization}}
+              {{- if .Values.istio.authorization.internalCallers}}
+              principals: {{ .Values.istio.authorization.internalCallers | toJson}}
+              {{- end}}
+              {{- end}}
       to:
         - operation:
             ports: [ "9090" ]
@@ -26,11 +26,11 @@ spec:
     # Allow internal service-to-service calls (REST)
     - from:
         - source:
-            { { - if .Values.istio.authorization } }
-              { { - if .Values.istio.authorization.internalCallers } }
-              principals: { { .Values.istio.authorization.internalCallers | toJson } }
-              { { - end } }
-              { { - end } }
+            {{- if .Values.istio.authorization}}
+              {{- if .Values.istio.authorization.internalCallers}}
+              principals: {{ .Values.istio.authorization.internalCallers | toJson}}
+              {{- end}}
+              {{- end}}
       to:
         - operation:
             methods: [ "GET", "POST", "PUT", "DELETE" ]
@@ -53,4 +53,4 @@ spec:
               - "/actuator/health"
               - "/actuator/health/*"
               - "/health"
-  { { - end } }
+  {{- end}}
