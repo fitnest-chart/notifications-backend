@@ -36,7 +36,7 @@ env:
   SPRING_MAIL_HOST: "smtp.gmail.com"
   SPRING_MAIL_PORT: "587"
   SPRING_MAIL_USERNAME: "fitnestazerbaijan@gmail.com"
-  SPRING_MAIL_PASSWORD: "lktq jnyn txhg sumu"
+  SPRING_MAIL_PASSWORD: "lktqjnyntxhgsumu"
   SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
   SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
   SPRING_MAIL_FROM: "fitnestazerbaijan@gmail.com"
