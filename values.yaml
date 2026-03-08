@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/fitnest-backend/notifications-service
-  tag: "development-d963aea"
+  tag: "development-f67581b"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
