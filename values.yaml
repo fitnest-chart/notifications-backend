@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/fitnest-backend/notifications-service
-  tag: "development-d7b8e36"
+  tag: "development-4c10f30"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
@@ -56,15 +56,8 @@ env:
   USER_SERVICE_URL: "http://user-service:8080"
   STORAGE_SERVICE_URL: "http://storage-service:8080"
   JAVA_TOOL_OPTIONS: >
-    -Xms256m
-    -Xmx768m
-    -XX:+UseG1GC
-    -XX:MaxGCPauseMillis=200
-    -XX:+ParallelRefProcEnabled
-    -XX:MaxMetaspaceSize=256m
-    -XX:+AlwaysPreTouch
-    -Xss512k
-    -XX:+ExitOnOutOfMemoryError
+    -Xms256m -Xmx768m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
+
   APP_FIREBASE_ENABLED: "true"
   APP_FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
 resources:
