@@ -58,11 +58,11 @@ env:
   APP_FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
 resources:
   limits:
-    memory: 800Mi
-    cpu: 1000m
-  requests:
+    memory: 1024Mi
     cpu: 500m
-    memory: 450Mi
+  requests:
+    cpu: 100m
+    memory: 300Mi
 firebase:
   secretName: firebase-sa
   mountPath: /app/firebase
