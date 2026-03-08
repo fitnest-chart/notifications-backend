@@ -49,6 +49,7 @@ env:
   KAFKA_BOOTSTRAP_SERVERS: "kafka-service:9092"
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES: "az.fitnest.*,az.fitnest.identity.model.event"
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_USE_TYPE_HEADERS: "false"
+  SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_VALUE_DEFAULT_TYPE: "az.fitnest.notifications.messaging.NotificationEvent"
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
