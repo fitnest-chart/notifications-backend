@@ -59,10 +59,10 @@ env:
 resources:
   requests:
     cpu: 150m
-    memory: 450Mi
+    memory: 400Mi
   limits:
-    cpu: 500m
-    memory: 800Mi
+    cpu: 400m
+    memory: 700Mi
 firebase:
   secretName: firebase-sa
   mountPath: /app/firebase
