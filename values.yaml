@@ -59,9 +59,9 @@ env:
 resources:
   limits:
     memory: 800Mi
-    cpu: 500m
+    cpu: 1000m
   requests:
-    cpu: 250m
+    cpu: 500m
     memory: 450Mi
 firebase:
   secretName: firebase-sa
