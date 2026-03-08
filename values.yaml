@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 image:
   repository: ghcr.io/fitnest-backend/notifications-service
   tag: "development-d7b8e36"
@@ -54,8 +54,8 @@ env:
   USER_SERVICE_URL: "http://user-service:8080"
   STORAGE_SERVICE_URL: "http://storage-service:8080"
   JAVA_TOOL_OPTIONS: >
-    -Xms128m
-    -Xmx384m
+    -Xms256m
+    -Xmx768m
     -XX:+UseG1GC
     -XX:MaxGCPauseMillis=200
     -XX:+ParallelRefProcEnabled
@@ -67,11 +67,11 @@ env:
   APP_FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
 resources:
   requests:
-    cpu: 150m
-    memory: 384Mi
-  limits:
-    cpu: 800m
+    cpu: 200m
     memory: 768Mi
+  limits:
+    cpu: 1000m
+    memory: 1536Mi
 firebase:
   secretName: firebase-sa
   mountPath: /app/firebase
