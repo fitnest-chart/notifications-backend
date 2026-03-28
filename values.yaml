@@ -43,9 +43,24 @@ env:
   SPRING_DATA_REDIS_HOST: "redis"
   SPRING_DATA_REDIS_PORT: "6379"
   SPRING_DATA_REDIS_PASSWORD: ""
-  SMS_LOGIN: "YOUR_LOGIN"
-  SMS_PASSWORD: "YOUR_PASSWORD"
-  SMS_SENDER: "YOUR_SENDER"
+  # The following SMS credentials are managed via Kubernetes secrets, not here:
+  # - SMS_LOGIN
+  # - SMS_PASSWORD
+  # - SMS_SENDER
+  # - LSIM_SMS_BASE_URL
+    envSecrets:
+      SMS_LOGIN:
+        secretName: lsim-sms-secret
+        secretKey: login
+      SMS_PASSWORD:
+        secretName: lsim-sms-secret
+        secretKey: password
+      SMS_SENDER:
+        secretName: lsim-sms-secret
+        secretKey: sender
+      LSIM_SMS_BASE_URL:
+        secretName: lsim-sms-secret
+        secretKey: base-url
   KAFKA_BOOTSTRAP_SERVERS: "kafka-service:9092"
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES: "az.fitnest.*,az.fitnest.identity.model.event"
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_USE_TYPE_HEADERS: "false"
