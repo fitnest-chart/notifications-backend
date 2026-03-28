@@ -43,24 +43,41 @@ env:
   SPRING_DATA_REDIS_HOST: "redis"
   SPRING_DATA_REDIS_PORT: "6379"
   SPRING_DATA_REDIS_PASSWORD: ""
-  # The following SMS credentials are managed via Kubernetes secrets, not here:
-  # - SMS_LOGIN
-  # - SMS_PASSWORD
-  # - SMS_SENDER
-  # - LSIM_SMS_BASE_URL
-    envSecrets:
-      SMS_LOGIN:
-        secretName: lsim-sms-secret
-        secretKey: login
-      SMS_PASSWORD:
-        secretName: lsim-sms-secret
-        secretKey: password
-      SMS_SENDER:
-        secretName: lsim-sms-secret
-        secretKey: sender
-      LSIM_SMS_BASE_URL:
-        secretName: lsim-sms-secret
-        secretKey: base-url
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-service:9092"
+  SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES: "az.fitnest.*,az.fitnest.identity.model.event"
+  SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_USE_TYPE_HEADERS: "false"
+  SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_VALUE_DEFAULT_TYPE: "az.fitnest.notifications.messaging.NotificationEvent"
+  JWT_SECRET: "your-jwt-secret-change-in-production"
+  JWT_ISSUER: "fitnest"
+  IDENTITY_SERVICE_URL: "http://identity-service:8080"
+  USER_SERVICE_URL: "http://user-service:8080"
+  STORAGE_SERVICE_URL: "http://storage-service:8080"
+  USE_GRPC_STORAGE: "false"
+  STORAGE_GRPC_ADDRESS: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
+  JAVA_TOOL_OPTIONS: >
+    -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
+  APP_FIREBASE_ENABLED: "true"
+  APP_FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
+
+# The following SMS credentials are managed via Kubernetes secrets, not here:
+# - SMS_LOGIN
+# - SMS_PASSWORD
+# - SMS_SENDER
+# - LSIM_SMS_BASE_URL
+
+envSecrets:
+  SMS_LOGIN:
+    secretName: lsim-sms-secret
+    secretKey: login
+  SMS_PASSWORD:
+    secretName: lsim-sms-secret
+    secretKey: password
+  SMS_SENDER:
+    secretName: lsim-sms-secret
+    secretKey: sender
+  LSIM_SMS_BASE_URL:
+    secretName: lsim-sms-secret
+    secretKey: base-url
   KAFKA_BOOTSTRAP_SERVERS: "kafka-service:9092"
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES: "az.fitnest.*,az.fitnest.identity.model.event"
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_USE_TYPE_HEADERS: "false"
