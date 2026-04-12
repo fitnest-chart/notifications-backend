@@ -11,7 +11,7 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    # Allow traffic from api-gateway pods
+    # Rule 1: Allow traffic from api-gateway
     - from:
         - podSelector:
             matchLabels:
@@ -21,17 +21,17 @@ spec:
           protocol: TCP
         - port: {{ .Values.service.grpcPort }}
           protocol: TCP
-  {{- if .Values.networkPolicy.allowedServices }}
-# Allow traffic from additional internal services
-- from:
-  {{- range .Values.networkPolicy.allowedServices }}
-- podSelector:
-    matchLabels:
-      app.kubernetes.io/name: {{ . }}
-  {{- end }}
-ports:
-  - port: {{ $.Values.service.port }}
-    protocol: TCP
-  - port: {{ $.Values.service.grpcPort }}
-    protocol: TCP
-  {{- end }}
+    # Rule 2: Allow traffic from additional services (if defined)
+    {{- if .Values.networkPolicy.allowedServices }}
+    - from:
+        {{- range .Values.networkPolicy.allowedServices }}
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ . }}
+        {{- end }}
+      ports:
+        - port: {{ $.Values.service.port }}
+          protocol: TCP
+        - port: {{ $.Values.service.grpcPort }}
+          protocol: TCP
+    {{- end }}
