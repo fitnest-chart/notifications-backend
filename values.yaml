@@ -1,27 +1,34 @@
+# values.yaml for notifications-backend
+
 replicaCount: 1
+
 image:
-  repository: ghcr.io/fitnest-backend/notifications-service
+  repository: ghcr.io/fitnest-code/notifications-backend
   tag: "development-3a00045"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
+
 service:
   type: ClusterIP
   port: 8080
   grpcPort: 9090
+
 networkPolicy:
   enabled: true
   allowedServices:
-    - user-service
-    - identity-service
-    - order-service
+    - user-backend
+    - identity-backend
+    - order-backend
     # api-gateway is already hardcoded in the policy template
+
 hpa:
   enabled: false
   minReplicas: "1"
   maxReplicas: "3"
   cpuUtilization: "90"
   memoryUtilization: "450Mi"
+
 env:
   SPRING_PROFILES_ACTIVE: "dev"
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
@@ -46,16 +53,16 @@ env:
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_VALUE_DEFAULT_TYPE: "az.fitnest.notifications.messaging.NotificationEvent"
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
-  IDENTITY_SERVICE_URL: "http://identity-service:8080"
-  USER_SERVICE_URL: "http://user-service:8080"
-  STORAGE_SERVICE_URL: "http://storage-service:8080"
+  IDENTITY_SERVICE_URL: "http://identity-backend:8080"
+  USER_SERVICE_URL: "http://user-backend:8080"
+  STORAGE_SERVICE_URL: "http://storage-backend:8080"
   USE_GRPC_STORAGE: "false"
-  STORAGE_GRPC_ADDRESS: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
+  STORAGE_GRPC_ADDRESS: "dns:///storage-backend.fitnest-dev.svc.cluster.local:9090"
   JAVA_TOOL_OPTIONS: >
     -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
-
   APP_FIREBASE_ENABLED: "true"
   APP_FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
+
 envSecrets:
   SMS_LOGIN:
     secretName: lsim-sms-secret
@@ -69,6 +76,7 @@ envSecrets:
   LSIM_SMS_BASE_URL:
     secretName: lsim-sms-secret
     secretKey: base-url
+
 resources:
   requests:
     cpu: 23m
@@ -76,6 +84,7 @@ resources:
   limits:
     cpu: 1000m
     memory: 1312Mi
+
 firebase:
   secretName: firebase-sa
   mountPath: /app/firebase
