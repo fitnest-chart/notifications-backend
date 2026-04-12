@@ -1,11 +1,13 @@
-{{- /* Use dynamic chart name for helper template definitions and includes */ -}}
-{{- $chartName := .Chart.Name -}}
+{{- /*
+    Generic helpers that use .Chart.Name for all naming.
+    Include these using "app.name", "app.fullname", "app.labels", "app.selectorLabels".
+*/ -}}
 
-{{- define (printf "%s.name" $chartName) -}}
+{{- define "app.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define (printf "%s.fullname" $chartName) -}}
+{{- define "app.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -14,13 +16,15 @@
 {{- end }}
 {{- end }}
 
-{{- define (printf "%s.labels" $chartName) -}}
-helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-app.kubernetes.io/name: {{ include (printf "%s.name" $chartName) . }}
+{{- define "app.labels" -}}
+helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+app.kubernetes.io/name: {{ include "app.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
-{{- define (printf "%s.selectorLabels" $chartName) -}}
-app.kubernetes.io/name: {{ include (printf "%s.name" $chartName) . }}
+{{- define "app.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "app.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
