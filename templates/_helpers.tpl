@@ -1,8 +1,11 @@
-{{- define "notifications-service.name" -}}
+{{- /* Use dynamic chart name for helper template definitions and includes */ -}}
+{{- $chartName := .Chart.Name -}}
+
+{{- define (printf "%s.name" $chartName) -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "notifications-service.fullname" -}}
+{{- define (printf "%s.fullname" $chartName) -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -11,13 +14,13 @@
 {{- end }}
 {{- end }}
 
-{{- define "notifications-service.labels" -}}
+{{- define (printf "%s.labels" $chartName) -}}
 helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-app.kubernetes.io/name: {{ include "notifications-service.name" . }}
+app.kubernetes.io/name: {{ include (printf "%s.name" $chartName) . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "notifications-service.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "notifications-service.name" . }}
+{{- define (printf "%s.selectorLabels" $chartName) -}}
+app.kubernetes.io/name: {{ include (printf "%s.name" $chartName) . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

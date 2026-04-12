@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "notifications-service.fullname" . }}
+  name: {{ include (printf "%s.fullname" .Chart.Name) . }}
   labels:
-    {{- include "notifications-service.labels" . | nindent 4 }}
+    {{- include (printf "%s.labels" .Chart.Name) . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "notifications-service.selectorLabels" . | nindent 6 }}
+      {{- include (printf "%s.selectorLabels" .Chart.Name) . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "notifications-service.selectorLabels" . | nindent 8 }}
+        {{- include (printf "%s.selectorLabels" .Chart.Name) . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "notifications-service.fullname" . }}
+      serviceAccountName: {{ include (printf "%s.fullname" .Chart.Name) . }}
       {{- with .Values.image.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

@@ -2,13 +2,13 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "notifications-service.fullname" . }}-ingress
+  name: {{ include (printf "%s.fullname" .Chart.Name) . }}-ingress
   labels:
-    {{- include "notifications-service.labels" . | nindent 4 }}
+    {{- include (printf "%s.labels" .Chart.Name) . | nindent 4 }}
 spec:
   podSelector:
     matchLabels:
-      {{- include "notifications-service.selectorLabels" . | nindent 6 }}
+      {{- include (printf "%s.selectorLabels" .Chart.Name) . | nindent 6 }}
   policyTypes:
     - Ingress
   ingress:
@@ -22,18 +22,18 @@ spec:
           protocol: TCP
         - port: {{ .Values.service.grpcPort }}
           protocol: TCP
-    {{- if .Values.networkPolicy.allowedServices }}
+{{- if .Values.networkPolicy.allowedServices }}
     # Allow traffic from additional internal services
     - from:
-        {{- range .Values.networkPolicy.allowedServices }}
+{{- range .Values.networkPolicy.allowedServices }}
         - podSelector:
             matchLabels:
               app.kubernetes.io/name: {{ . }}
-        {{- end }}
+{{- end }}
       ports:
         - port: {{ $.Values.service.port }}
           protocol: TCP
         - port: {{ $.Values.service.grpcPort }}
           protocol: TCP
-    {{- end }}
-  {{- end }}
+{{- end }}
+{{- end }}

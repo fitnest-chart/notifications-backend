@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "notifications-service.fullname" .}}
+  name: {{ include (printf "%s.fullname" .Chart.Name) .}}
   labels:
-    {{- include "notifications-service.labels" . | nindent 4}}
+    {{- include (printf "%s.labels" .Chart.Name) . | nindent 4}}
 spec:
   type: {{ .Values.service.type}}
   ports:
@@ -16,4 +16,4 @@ spec:
       protocol: TCP
       name: grpc
   selector:
-    {{- include "notifications-service.selectorLabels" . | nindent 4}}
+    {{- include (printf "%s.selectorLabels" .Chart.Name) . | nindent 4}}
