@@ -48,9 +48,9 @@ env:
   SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_VALUE_DEFAULT_TYPE: "az.fitnest.notifications.messaging.NotificationEvent"
   JWT_SECRET: "your-jwt-secret-change-in-production"
   JWT_ISSUER: "fitnest"
-  IDENTITY_SERVICE_URL: "http://identity-backend:8080"
-  USER_SERVICE_URL: "http://user-backend:8080"
-  STORAGE_SERVICE_URL: "http://storage-backend:8080"
+  IDENTITY_BACKEND_URL: "http://identity-backend:8080"
+  USER_BACKEND_URL: "http://user-backend:8080"
+  STORAGE_BACKEND_URL: "http://storage-backend:8080"
   USE_GRPC_STORAGE: "false"
   STORAGE_GRPC_ADDRESS: "dns:///storage-backend.fitnest-dev.svc.cluster.local:9090"
   JAVA_TOOL_OPTIONS: >
