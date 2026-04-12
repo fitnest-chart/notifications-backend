@@ -1,0 +1,39 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "notifications-service.fullname" . }}-ingress
+  labels:
+    {{- include "notifications-service.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "notifications-service.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow traffic from api-gateway pods
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api-gateway
+      ports:
+        - port: {{ .Values.service.port }}
+          protocol: TCP
+        - port: {{ .Values.service.grpcPort }}
+          protocol: TCP
+    {{- if .Values.networkPolicy.allowedServices }}
+    # Allow traffic from additional internal services
+    - from:
+        {{- range .Values.networkPolicy.allowedServices }}
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ . }}
+        {{- end }}
+      ports:
+        - port: {{ $.Values.service.port }}
+          protocol: TCP
+        - port: {{ $.Values.service.grpcPort }}
+          protocol: TCP
+    {{- end }}
+  {{- end }}

@@ -1,31 +1,32 @@
 replicaCount: 1
+
 image:
   repository: ghcr.io/fitnest-backend/notifications-service
   tag: "development-c52b2e9"
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
+
 service:
   type: ClusterIP
   port: 8080
   grpcPort: 9090
-istio:
+
+networkPolicy:
   enabled: true
-  host: "notifications-service"
-  mtls:
-    mode: STRICT
-  authorization:
-    internalCallers:
-      - "cluster.local/ns/fitnest-dev/sa/user-service"
-      - "cluster.local/ns/fitnest-dev/sa/identity-service"
-      - "cluster.local/ns/fitnest-dev/sa/order-service"
-      - "cluster.local/ns/fitnest-dev/sa/api-gateway"
+  allowedServices:
+    - user-service
+    - identity-service
+    - order-service
+    # api-gateway is already hardcoded in the policy template
+
 hpa:
   enabled: false
   minReplicas: "1"
   maxReplicas: "3"
   cpuUtilization: "90"
   memoryUtilization: "450Mi"
+
 env:
   SPRING_PROFILES_ACTIVE: "dev"
   SPRINGDOC_SERVER_URL: "https://dev-api.fitnest.az"
@@ -57,14 +58,9 @@ env:
   STORAGE_GRPC_ADDRESS: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
   JAVA_TOOL_OPTIONS: >
     -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
-
   APP_FIREBASE_ENABLED: "true"
   APP_FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
-# The following SMS credentials are managed via Kubernetes secrets, not here:
-# - SMS_LOGIN
-# - SMS_PASSWORD
-# - SMS_SENDER
-# - LSIM_SMS_BASE_URL
+
 envSecrets:
   SMS_LOGIN:
     secretName: lsim-sms-secret
@@ -78,23 +74,7 @@ envSecrets:
   LSIM_SMS_BASE_URL:
     secretName: lsim-sms-secret
     secretKey: base-url
-  KAFKA_BOOTSTRAP_SERVERS: "kafka-service:9092"
-  SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES: "az.fitnest.*,az.fitnest.identity.model.event"
-  SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_USE_TYPE_HEADERS: "false"
-  SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_VALUE_DEFAULT_TYPE: "az.fitnest.notifications.messaging.NotificationEvent"
-  JWT_SECRET: "your-jwt-secret-change-in-production"
-  JWT_ISSUER: "fitnest"
-  IDENTITY_SERVICE_URL: "http://identity-service:8080"
-  USER_SERVICE_URL: "http://user-service:8080"
-  STORAGE_SERVICE_URL: "http://storage-service:8080"
-  # Optional: enable gRPC-based storage client instead of HTTP. When true, set STORAGE_GRPC_ADDRESS.
-  USE_GRPC_STORAGE: "false"
-  STORAGE_GRPC_ADDRESS: "dns:///storage-service.fitnest-dev.svc.cluster.local:9090"
-  JAVA_TOOL_OPTIONS: >
-    -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ParallelRefProcEnabled -XX:MaxMetaspaceSize=256m -XX:+AlwaysPreTouch -Xss512k -XX:+ExitOnOutOfMemoryError
 
-  APP_FIREBASE_ENABLED: "true"
-  APP_FIREBASE_CONFIG_PATH: "/app/firebase/serviceAccountKey.json"
 resources:
   requests:
     cpu: 23m
@@ -102,6 +82,7 @@ resources:
   limits:
     cpu: 1000m
     memory: 1312Mi
+
 firebase:
   secretName: firebase-sa
   mountPath: /app/firebase
