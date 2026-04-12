@@ -17,7 +17,7 @@ networkPolicy:
     - user-backend
     - identity-backend
     - order-backend
-    # api-gateway is already hardcoded in the policy template
+    # gateway-backend is already hardcoded in the policy template
 hpa:
   enabled: false
   minReplicas: "1"

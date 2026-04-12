@@ -11,11 +11,11 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    # Rule 1: Allow traffic from api-gateway
+    # Rule 1: Allow traffic from gateway-backend
     - from:
         - podSelector:
             matchLabels:
-              app.kubernetes.io/name: api-gateway
+              app.kubernetes.io/name: gateway-backend
       ports:
         - port: {{ .Values.service.port }}
           protocol: TCP
