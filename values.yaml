@@ -31,13 +31,11 @@ env:
   SPRING_DATASOURCE_USERNAME: "postgres"
   SPRING_DATASOURCE_PASSWORD: "shared_password_root_123"
   SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
-  SPRING_MAIL_HOST: "smtp.gmail.com"
+  SPRING_MAIL_HOST: "smtp.zoho.com"
   SPRING_MAIL_PORT: "587"
-  SPRING_MAIL_USERNAME: "fitnestazerbaijan@gmail.com"
-  SPRING_MAIL_PASSWORD: "liopkmpxhntalmrz"
   SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
   SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
-  SPRING_MAIL_FROM: "fitnestazerbaijan@gmail.com"
+  SPRING_MAIL_FROM: "notifications@fitnest.az" # This can be overridden or mapped from secret if needed
   SPRING_DATA_REDIS_HOST: "10.0.0.4"
   SPRING_DATA_REDIS_PORT: "6380"
   SPRING_DATA_REDIS_PASSWORD: "ChangeMeDevRedis!"
@@ -71,6 +69,12 @@ envSecrets:
   LSIM_SMS_BASE_URL:
     secretName: lsim-sms-secret
     secretKey: base-url
+  SPRING_MAIL_USERNAME:
+    secretName: mail-secret
+    secretKey: email
+  SPRING_MAIL_PASSWORD:
+    secretName: mail-secret
+    secretKey: password
 resources:
   requests:
     cpu: 23m

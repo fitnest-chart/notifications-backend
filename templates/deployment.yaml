@@ -66,15 +66,24 @@ spec:
             - name: SPRING_MAIL_PORT
               value: {{ .Values.env.SPRING_MAIL_PORT | quote }}
             - name: SPRING_MAIL_USERNAME
-              value: {{ .Values.env.SPRING_MAIL_USERNAME | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.envSecrets.SPRING_MAIL_USERNAME.secretName }}
+                  key: {{ .Values.envSecrets.SPRING_MAIL_USERNAME.secretKey }}
             - name: SPRING_MAIL_PASSWORD
-              value: {{ .Values.env.SPRING_MAIL_PASSWORD | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.envSecrets.SPRING_MAIL_PASSWORD.secretName }}
+                  key: {{ .Values.envSecrets.SPRING_MAIL_PASSWORD.secretKey }}
             - name: SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH
               value: {{ .Values.env.SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH | quote }}
             - name: SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE
               value: {{ .Values.env.SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE | quote }}
             - name: SPRING_MAIL_FROM
-              value: {{ .Values.env.SPRING_MAIL_FROM | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.envSecrets.SPRING_MAIL_USERNAME.secretName }}
+                  key: {{ .Values.envSecrets.SPRING_MAIL_USERNAME.secretKey }}
             - name: SPRING_DATA_REDIS_HOST
               value: {{ .Values.env.SPRING_DATA_REDIS_HOST | quote }}
             - name: SPRING_DATA_REDIS_PORT
