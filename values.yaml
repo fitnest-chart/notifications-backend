@@ -31,4 +31,4 @@ service:
   grpcPort: 9090
   port: 8080
   type: ClusterIP
-vaultEnv: development
+vaultEnv: production
