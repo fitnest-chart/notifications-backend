@@ -9,15 +9,15 @@ hpa:
   minReplicas: '1'
 image:
   imagePullSecrets:
-  - name: ghcr-secret
+    - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/notifications-backend
-  tag: development-27bb105
+  tag: development-5a73fe9
 networkPolicy:
   allowedServices:
-  - user-backend
-  - identity-backend
-  - order-backend
+    - user-backend
+    - identity-backend
+    - order-backend
   enabled: true
 replicaCount: 1
 resources:
