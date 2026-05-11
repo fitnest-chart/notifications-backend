@@ -33,5 +33,5 @@ service:
   type: ClusterIP
 vaultEnv: development
 database:
-  hikariMaxPool: 20
-  hikariMinIdle: 5
+  hikariMaxPool: 30
+  hikariMinIdle: 10
