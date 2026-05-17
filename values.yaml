@@ -12,7 +12,7 @@ image:
     - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/notifications-backend
-  tag: production-de0776e
+  tag: development-b1d9dac
 networkPolicy:
   allowedServices:
     - user-backend
@@ -31,4 +31,7 @@ service:
   grpcPort: 9090
   port: 8080
   type: ClusterIP
-vaultEnv: production
+vaultEnv: development
+database:
+  hikariMaxPool: 30
+  hikariMinIdle: 10

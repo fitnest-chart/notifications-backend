@@ -57,5 +57,9 @@ spec:
               value: "{{ .Chart.Name }}"
             - name: SPRING_CLOUD_VAULT_KV_PROFILE_SEPARATOR
               value: "/"
+            - name: HIKARI_MAX_POOL
+              value: {{ .Values.database.hikariMaxPool | quote }}
+            - name: HIKARI_MIN_IDLE
+              value: {{ .Values.database.hikariMinIdle | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
