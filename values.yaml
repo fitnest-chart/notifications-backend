@@ -21,12 +21,12 @@ networkPolicy:
   enabled: true
 replicaCount: 1
 resources:
-  limits:
-    cpu: 1000m
-    memory: 1312Mi
   requests:
-    cpu: 23m
-    memory: 853Mi
+    cpu: 200m
+    memory: 1024Mi
+  limits:
+    cpu: 1500m
+    memory: 1536Mi
 service:
   grpcPort: 9090
   port: 8080
