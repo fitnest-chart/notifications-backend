@@ -65,3 +65,11 @@ spec:
               value: {{ .Values.database.hikariMinIdle | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: firebase-sa-volume
+              mountPath: {{ .Values.firebase.mountPath }}
+              readOnly: true
+      volumes:
+        - name: firebase-sa-volume
+          secret:
+            secretName: {{ .Values.firebase.secretName }}
