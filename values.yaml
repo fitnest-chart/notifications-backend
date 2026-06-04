@@ -12,7 +12,7 @@ image:
     - name: ghcr-secret
   pullPolicy: IfNotPresent
   repository: ghcr.io/fitnest-code/notifications-backend
-  tag: production-9592413
+  tag: production-d705eff
 networkPolicy:
   allowedServices:
     - user-backend
