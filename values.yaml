@@ -23,10 +23,10 @@ replicaCount: 1
 resources:
   requests:
     cpu: 200m
-    memory: 1280Mi
+    memory: 640Mi
   limits:
     cpu: 2000m
-    memory: 2048Mi
+    memory: 1280Mi
 service:
   grpcPort: 9090
   port: 8080
